@@ -79,20 +79,20 @@
 
 
 
-<meta name="description" content="系统为什么要分层先说说我个人的看法，也是在职能重构系统中自己关于系统设计的思考  ###1.开发人员较少时，纯后端系统是否需要系统分层？&amp;#8195;这个问题很有意思，在系统是否需要分层前，加了两个限制-开发人员较少、纯后端系统。&amp;#8195;先说我个人的观点 系统分层是必须的，但不一定要完全参照MVC的形式去设计。&amp;#8195;先说系统分层为什么是必须的，熟悉mvc发展历史的话，知道在mvc出现">
+<meta name="description" content="系统为什么要分层先说说我个人的看法，也是在职能重构系统中自己关于系统设计的思考  1.开发人员较少时，纯后端系统是否需要系统分层？&amp;#8195;这个问题很有意思，在系统是否需要分层前，加了两个限制-开发人员较少、纯后端系统。&amp;#8195;先说我个人的观点 系统分层是必须的，但不一定要完全参照MVC的形式去设计。&amp;#8195;先说系统分层为什么是必须的，熟悉mvc发展历史的话，知道在mvc出现之前，">
 <meta property="og:type" content="article">
 <meta property="og:title" content="系统为什么要分层">
 <meta property="og:url" content="http://yoursite.com/2020/01/14/%E7%B3%BB%E7%BB%9F%E4%B8%BA%E4%BB%80%E4%B9%88%E8%A6%81%E5%88%86%E5%B1%82/index.html">
 <meta property="og:site_name" content="格物致知">
-<meta property="og:description" content="系统为什么要分层先说说我个人的看法，也是在职能重构系统中自己关于系统设计的思考  ###1.开发人员较少时，纯后端系统是否需要系统分层？&amp;#8195;这个问题很有意思，在系统是否需要分层前，加了两个限制-开发人员较少、纯后端系统。&amp;#8195;先说我个人的观点 系统分层是必须的，但不一定要完全参照MVC的形式去设计。&amp;#8195;先说系统分层为什么是必须的，熟悉mvc发展历史的话，知道在mvc出现">
+<meta property="og:description" content="系统为什么要分层先说说我个人的看法，也是在职能重构系统中自己关于系统设计的思考  1.开发人员较少时，纯后端系统是否需要系统分层？&amp;#8195;这个问题很有意思，在系统是否需要分层前，加了两个限制-开发人员较少、纯后端系统。&amp;#8195;先说我个人的观点 系统分层是必须的，但不一定要完全参照MVC的形式去设计。&amp;#8195;先说系统分层为什么是必须的，熟悉mvc发展历史的话，知道在mvc出现之前，">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://pic002.cnblogs.com/images/2011/328599/2011102617001647.gif">
+<meta property="og:image" content="https://i.ibb.co/tcFz03r/mvc.gif">
 <meta property="og:image" content="https://i.ibb.co/60ZBGPB/image.jpg">
 <meta property="article:published_time" content="2020-01-14T08:42:28.600Z">
-<meta property="article:modified_time" content="2020-01-17T09:24:32.504Z">
+<meta property="article:modified_time" content="2020-01-17T09:32:50.575Z">
 <meta property="article:author" content="RunCJH">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://pic002.cnblogs.com/images/2011/328599/2011102617001647.gif">
+<meta name="twitter:image" content="https://i.ibb.co/tcFz03r/mvc.gif">
 
 
 
@@ -303,13 +303,13 @@
 
       
         <h1 id="系统为什么要分层"><a href="#系统为什么要分层" class="headerlink" title="系统为什么要分层"></a>系统为什么要分层</h1><p>先说说我个人的看法，也是在职能重构系统中自己关于系统设计的思考 </p>
-<p>###1.开发人员较少时，纯后端系统是否需要系统分层？<br>&#8195;这个问题很有意思，在系统是否需要分层前，加了两个限制-开发人员较少、纯后端系统。<br>&#8195;先说我个人的观点</p>
+<h3 id="1-开发人员较少时，纯后端系统是否需要系统分层？"><a href="#1-开发人员较少时，纯后端系统是否需要系统分层？" class="headerlink" title="1.开发人员较少时，纯后端系统是否需要系统分层？"></a>1.开发人员较少时，纯后端系统是否需要系统分层？</h3><p>&#8195;这个问题很有意思，在系统是否需要分层前，加了两个限制-开发人员较少、纯后端系统。<br>&#8195;先说我个人的观点</p>
 <pre><code>系统分层是必须的，但不一定要完全参照MVC的形式去设计。</code></pre><p>&#8195;先说系统分层为什么是必须的，熟悉mvc发展历史的话，知道在mvc出现之前，系统的展现形式如下：</p>
 <p>&#8195;所有的逻辑（包括业务逻辑，数据库访问逻辑和页面展现层）都放在一个类似JSP这样的模板里</p>
 <p>&#8195;从单一职责的角度上来看，这样的设计是脆弱的，一个模板里的职责包含了页面展示，包含了业务逻辑包含了数据库访问，如果需要对其中任何一个作出修改的时候，都会影响整个模板，而页面展示、业务逻辑和数据库访问三者的变化速率也是不一致的。任何的变化，都会破坏原有的设计，混乱就开始了。</p>
 <p>&#8195;所以，我认为，系统分层是必须的，我们需要参照单一职责的设计原则，去合理的拆分每个模块的职责，让模板变化的原因和速率趋向于”一”，这样我们可以认为我们对于这个模块的设计，是合理且健壮的。</p>
 <p>&#8195;那么在来说一下，为什么不推荐使用MVC的架构方式去做纯后端设计呢？<br>&#8195;我们先来看看MVC的架构，如下图</p>
-<p><img src="https://pic002.cnblogs.com/images/2011/328599/2011102617001647.gif" alt=""></p>
+<p><img src="https://i.ibb.co/tcFz03r/mvc.gif" alt=""></p>
 <p>MVC分层出现的原因有以下几个：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">从Model中分离View</span><br></pre></td></tr></table></figure>
 <ul>
@@ -325,7 +325,7 @@
 </ul>
 <p>&#8195;以上两点，在纯后端系统中，是否还有存在的余地呢，我认为第一点是不存在的，纯后端系统，我们最终的目的是提供一种能力，这种能力没有也不需要过多的表现形式，天生就自带较高的可测试性。第二点，有存在的必要，但是存在形式可能需要发生改变</p>
 <p>&#8195;虽然MVC不在那么通用了，但是其表现的设计思想，是通用的，单一职责的设计原则</p>
-<p>###2.纯后端系统的分层思考<br>&#8195;纯后端系统不再适合使用MVC分层，那么一个纯后端系统的合理分层是什么样的呢？</p>
+<h3 id="2-纯后端系统的分层思考"><a href="#2-纯后端系统的分层思考" class="headerlink" title="2.纯后端系统的分层思考"></a>2.纯后端系统的分层思考</h3><p>&#8195;纯后端系统不再适合使用MVC分层，那么一个纯后端系统的合理分层是什么样的呢？</p>
 <pre><code>纯后端系统的设计中心在业务层</code></pre><p>&#8195;我们的设计目标和MVC出现的原因一样，有以下几点</p>
 <ol>
 <li><p>隔离业务，关注点不同的业务，需要分开</p>
@@ -358,8 +358,7 @@
 </li>
 </ul>
 <p><img src="https://i.ibb.co/60ZBGPB/image.jpg" alt=""></p>
-<p>###3.架构设计的思考<br>        架构设计是一个持续的不断平衡的过程.</p>
-<ol>
+<h3 id="3-架构设计的思考"><a href="#3-架构设计的思考" class="headerlink" title="3.架构设计的思考"></a>3.架构设计的思考</h3><pre><code>架构设计是一个持续的不断平衡的过程.</code></pre><ol>
 <li>一个不好的系统设计，不是说一开始就是不好的，一定是在其发展的过程中，原有的设计被不断破坏</li>
 <li>在设计系统之初，我们没办法做到一劳永逸，我们必须要有适当的取舍，开发的各个阶段的侧重点也不同。</li>
 <li>好的架构，应该要尽可能的推迟细节性的决策</li>
@@ -510,7 +509,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#系统为什么要分层"><span class="nav-number">1.</span> <span class="nav-text">系统为什么要分层</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#系统为什么要分层"><span class="nav-number">1.</span> <span class="nav-text">系统为什么要分层</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-开发人员较少时，纯后端系统是否需要系统分层？"><span class="nav-number">1.0.1.</span> <span class="nav-text">1.开发人员较少时，纯后端系统是否需要系统分层？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-纯后端系统的分层思考"><span class="nav-number">1.0.2.</span> <span class="nav-text">2.纯后端系统的分层思考</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-架构设计的思考"><span class="nav-number">1.0.3.</span> <span class="nav-text">3.架构设计的思考</span></a></li></ol></li></ol></li></ol></div>
             
 
           </div>
