@@ -350,6 +350,187 @@
 
 
     
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/01/14/%E7%B3%BB%E7%BB%9F%E4%B8%BA%E4%BB%80%E4%B9%88%E8%A6%81%E5%88%86%E5%B1%82/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="RunCJH">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="格物致知">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2020/01/14/%E7%B3%BB%E7%BB%9F%E4%B8%BA%E4%BB%80%E4%B9%88%E8%A6%81%E5%88%86%E5%B1%82/" itemprop="url">系统为什么要分层</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2020-01-14T16:42:28+08:00">
+                2020-01-14
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="系统为什么要分层"><a href="#系统为什么要分层" class="headerlink" title="系统为什么要分层"></a>系统为什么要分层</h1><p>先说说我个人的看法，也是在职能重构系统中自己关于系统设计的思考 </p>
+<p>###1.开发人员较少时，纯后端系统是否需要系统分层？<br>&#8195;这个问题很有意思，在系统是否需要分层前，加了两个限制-开发人员较少、纯后端系统。<br>&#8195;先说我个人的观点</p>
+<pre><code>系统分层是必须的，但不一定要完全参照MVC的形式去设计。</code></pre><p>&#8195;先说系统分层为什么是必须的，熟悉mvc发展历史的话，知道在mvc出现之前，系统的展现形式如下：</p>
+<p>&#8195;所有的逻辑（包括业务逻辑，数据库访问逻辑和页面展现层）都放在一个类似JSP这样的模板里</p>
+<p>&#8195;从单一职责的角度上来看，这样的设计是脆弱的，一个模板里的职责包含了页面展示，包含了业务逻辑包含了数据库访问，如果需要对其中任何一个作出修改的时候，都会影响整个模板，而页面展示、业务逻辑和数据库访问三者的变化速率也是不一致的。任何的变化，都会破坏原有的设计，混乱就开始了。</p>
+<p>&#8195;所以，我认为，系统分层是必须的，我们需要参照单一职责的设计原则，去合理的拆分每个模块的职责，让模板变化的原因和速率趋向于”一”，这样我们可以认为我们对于这个模块的设计，是合理且健壮的。</p>
+<p>&#8195;那么在来说一下，为什么不推荐使用MVC的架构方式去做纯后端设计呢？<br>&#8195;我们先来看看MVC的架构，如下图</p>
+<p><img src="https://pic002.cnblogs.com/images/2011/328599/2011102617001647.gif" alt=""></p>
+<p>MVC分层出现的原因有以下几个：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">从Model中分离View</span><br></pre></td></tr></table></figure>
+<ul>
+<li>不同的关注点：Model关注内在的不可视的逻辑，而View关注外在的可视的逻辑。 </li>
+<li>多种表现形式：同一个Model往往需要多种View表现形式，如文本、图像</li>
+<li>提高可测试性：相对Model而言，View是不容易测试的。</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">从View中分离Controller</span><br></pre></td></tr></table></figure>
+<ul>
+<li>展示层需要聚焦UI，对于路由不关心</li>
+<li>业务逻辑存在复用的可能</li>
+<li>开源框架的支持</li>
+</ul>
+<p>&#8195;以上两点，在纯后端系统中，是否还有存在的余地呢，我认为第一点是不存在的，纯后端系统，我们最终的目的是提供一种能力，这种能力没有也不需要过多的表现形式，天生就自带较高的可测试性。第二点，有存在的必要，但是存在形式可能需要发生改变</p>
+<p>&#8195;虽然MVC不在那么通用了，但是其表现的设计思想，是通用的，单一职责的设计原则</p>
+<p>###2.纯后端系统的分层思考<br>&#8195;纯后端系统不再适合使用MVC分层，那么一个纯后端系统的合理分层是什么样的呢？</p>
+<pre><code>纯后端系统的设计中心在业务层</code></pre><p>&#8195;我们的设计目标和MVC出现的原因一样，有以下几点</p>
+<ol>
+<li><p>隔离业务，关注点不同的业务，需要分开</p>
+</li>
+<li><p>对扩展开放，对修改关闭</p>
+</li>
+<li><p>更高的可测试性</p>
+</li>
+<li><p>业务的复用</p>
+<pre><code>分层结构</code></pre></li>
+</ol>
+<ul>
+<li><p>网关层: 基本参数校验和转换，系统策略如一些权限控制或限流等</p>
+</li>
+<li><p>业务层：</p>
+<ul>
+<li>复杂（组合）业务层：复杂业务一般需要聚合多个业务，跨多个业务作业，对网关层，该层可以避免对其暴露过多细节，对于下层，该层包含更多复杂业务，聚合多变的业务，提高了系统架构的扩展性，降低了下层结构之前的耦合</li>
+<li>单一业务层：单一业务，确保这里每个业务都是原子的，提高复用和可测试性</li>
+</ul>
+</li>
+<li><p>基础设施层：起到防腐层的作用，隔离无关业务细节</p>
+<pre><code>依赖方向的控制：基础设施层和网关层依赖于业务层</code></pre></li>
+<li><p>底层策略依赖于高层策略</p>
+</li>
+<li><p>依赖关系指向更稳定的方向</p>
+<pre><code>跨层数据对象转换的必须</code></pre></li>
+<li><p>基础设施层 -&gt; 业务层 需要转换对象</p>
+</li>
+<li><p>业务层 -&gt; 网关层 需要转换对象</p>
+</li>
+</ul>
+<p><img src="https://i.ibb.co/60ZBGPB/image.jpg" alt=""></p>
+<p>###3.架构设计的思考<br>        架构设计是一个持续的不断平衡的过程.</p>
+<ol>
+<li>一个不好的系统设计，不是说一开始就是不好的，一定是在其发展的过程中，原有的设计被不断破坏</li>
+<li>在设计系统之初，我们没办法做到一劳永逸，我们必须要有适当的取舍，开发的各个阶段的侧重点也不同。</li>
+<li>好的架构，应该要尽可能的推迟细节性的决策</li>
+</ol>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
   </section>
 
   
@@ -396,7 +577,7 @@
               
                 <a href="/archives/%20%7C%7C%20archive">
               
-                  <span class="site-state-item-count">1</span>
+                  <span class="site-state-item-count">2</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>
